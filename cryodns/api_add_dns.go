@@ -27,8 +27,7 @@ func addDNS(w http.ResponseWriter, r *http.Request, redisClient *redis.Client) {
 		clientSecHash := sha3.Sum512([]byte(clientSec))
 		storedSecHash, err := redisClient.Get("sec").Result()
 		if err != nil {
-			// sec not set,
-			// throw 400
+			// sec not set, throw 400
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
@@ -74,9 +73,11 @@ func addDNS(w http.ResponseWriter, r *http.Request, redisClient *redis.Client) {
 			// return confirmation header to client
 			w.Header().Set("x-register", "registered")
 			w.WriteHeader(http.StatusOK)
+			return
 		} else {
-			// not authed
+			// not authed, throw 403
 			w.WriteHeader(http.StatusForbidden)
+			return
 		}
 	}
 }
