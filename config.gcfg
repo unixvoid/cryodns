@@ -1,0 +1,12 @@
+[cryo]
+	loglevel	= "debug"
+	dnsport		= 9053
+	apiport		= 9080
+	ttl		= 0
+
+[upstream]
+	server		= "8.8.8.8:53"
+
+[redis]
+	host		= "localhost:6379"
+	password	= ""
