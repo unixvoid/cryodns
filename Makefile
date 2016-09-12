@@ -14,7 +14,10 @@ run:
 		cryodns/api_listener.go \
 		cryodns/api_list_dns.go \
 		cryodns/api_add_dns.go \
-		cryodns/api_remove_dns.go 
+		cryodns/api_remove_dns.go \
+		cryodns/bootstrap.go \
+		cryodns/register.go \
+		cryodns/rotate.go
 
 docker:
 	$(MAKE) stat

@@ -1,5 +1,7 @@
 FROM scratch
 
+ENV GIT_HASH=<GIT_HASH>
+
 ADD rootfs.tar.gz /
 COPY cryodns /
 COPY config.gcfg /

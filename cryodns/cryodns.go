@@ -15,10 +15,13 @@ import (
 
 type Config struct {
 	Cryo struct {
-		Loglevel string
-		DNSPort  int
-		APIPort  int
-		Ttl      uint32
+		Loglevel      string
+		DNSPort       int
+		APIPort       int
+		Ttl           uint32
+		Bootstrap     bool
+		SecTokenSize  int
+		SecDictionary string
 	}
 	Upstream struct {
 		Server string
@@ -42,6 +45,11 @@ func main() {
 		glogger.Error.Println("cryodns will continue to function in passthrough mode only")
 	} else {
 		glogger.Debug.Println("connection to redis succeeded.")
+	}
+
+	// if bootstrap is set, check the database
+	if config.Cryo.Bootstrap {
+		go bootstrapCheck(redisClient)
 	}
 
 	// format the string to be :port

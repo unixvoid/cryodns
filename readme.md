@@ -1,5 +1,6 @@
 # TODO
-- dns passthrough if not in db  
+- security tokens used all around
+done- dns passthrough if not in db  
 done- `/remove` endpoint  
 
 ### Redis data structure

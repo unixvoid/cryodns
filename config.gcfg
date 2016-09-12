@@ -3,6 +3,9 @@
 	dnsport		= 9053
 	apiport		= 9080
 	ttl		= 0
+	bootstrap	= true
+	sectokensize	= 25
+	secdictionary 	= "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 
 [upstream]
 	server		= "8.8.8.8:53"
