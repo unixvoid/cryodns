@@ -8,6 +8,13 @@ GIT_HASH=$(shell git rev-parse HEAD | head -c 10)
 cryodns:
 	$(GOC) cryodns.go
 
+dependencies:
+	go get github.com/gorilla/mux
+	go get gopkg.in/gcfg.v1
+	go get github.com/unixvoid/glogger
+	go get github.com/miekg/dns
+	go get gopkg.in/redis.v4
+
 run:
 	go run \
 		cryodns/cryodns.go \
