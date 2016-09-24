@@ -2,7 +2,7 @@ GOC=go build
 GOFLAGS=-a -ldflags '-s'
 CGOR=CGO_ENABLED=0
 DOCKER_PREFIX=sudo
-IMAGE_NAME=cryodns
+IMAGE_NAME=unixvoid/cryodns
 GIT_HASH=$(shell git rev-parse HEAD | head -c 10)
 
 cryodns:
@@ -34,10 +34,46 @@ docker:
 dockerrun:
 	$(DOCKER_PREFIX) docker run \
 		-d \
-		-p 8053:8053 \
-		-p 8080:8080 \
+		-p 9053:9053 \
+		-p 9080:9080 \
 		-v /tmp/:/redisbackup:rw \
-		cryodns
+		--name cryodns \
+		$(IMAGE_NAME)
+
+aci:
+	$(MAKE) stat
+	mkdir -p stage.tmp/cryodns-layout/rootfs/
+	tar -zxf deps/rootfs.tar.gz -C stage.tmp/cryodns-layout/rootfs/
+	cp bin/cryodns* stage.tmp/cryodns-layout/rootfs/cryodns
+	chmod +x deps/run.sh
+	cp deps/run.sh stage.tmp/cryodns-layout/rootfs/
+	sed -i "s/\$$DIFF/$(GIT_HASH)/g" stage.tmp/cryodns-layout/rootfs/run.sh
+	cp config.gcfg stage.tmp/cryodns-layout/rootfs/
+	cp deps/manifest.json stage.tmp/cryodns-layout/manifest
+	cd stage.tmp/ && \
+		actool build cryodns-layout cryodns.aci && \
+		mv cryodns.aci ../
+	@echo "cryodns.aci built"
+
+testaci:
+	deps/testrkt.sh
+
+travisaci:
+	wget https://github.com/appc/spec/releases/download/v0.8.7/appc-v0.8.7.tar.gz
+	tar -zxf appc-v0.8.7.tar.gz
+	$(MAKE) stat
+	mkdir -p stage.tmp/cryodns-layout/rootfs/
+	tar -zxf deps/rootfs.tar.gz -C stage.tmp/cryodns-layout/rootfs/
+	cp bin/cryodns* stage.tmp/cryodns-layout/rootfs/cryodns
+	chmod +x deps/run.sh
+	cp deps/run.sh stage.tmp/cryodns-layout/rootfs/
+	sed -i "s/\$DIFF/$(GIT_HASH)/g" stage.tmp/cryodns-layout/rootfs/run.sh
+	cp cryodns/config.gcfg stage.tmp/cryodns-layout/rootfs/
+	cp deps/manifest.json stage.tmp/cryodns-layout/manifest
+	cd stage.tmp/ && \
+		../appc-v0.8.7/actool build cryodns-layout cryodns.aci && \
+		mv cryodns.aci ../
+	@echo "cryodns.aci built"
 
 clean:
 	rm -rf bin/

@@ -1,0 +1,31 @@
+language: go
+
+go:
+  - 1.5.4
+  - 1.6
+
+services:
+  - docker
+
+install:
+  - make dependencies
+
+script:
+  - make stat
+  - make test
+
+after_success:
+  - make clean docker
+  - docker login -e $DOCKER_EMAIL -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+  - docker tag unixvoid/cryodns unixvoid/cryodns:develop
+  - docker push unixvoid/cryodns:develop
+  - curl -i --form sec=$BINDER_SEC --form file=@`ls bin/cryodns*` --form path=cryodns/ https://cryo.unixvoid.com/upload
+  - curl -i --form sec=$BINDER_SEC --form file=@`ls bin/cryodns*` --form filename=cryodns-latest-linux-amd64 --form path=cryodns/ https://cryo.unixvoid.com/upload
+  - curl -d sec=$BINDER_SEC -d key=unixvoid.pub https://cryo.unixvoid.com/getfile --output unixvoid.pub
+  - curl -d sec=$BINDER_SEC -d key=unixvoid.sec https://cryo.unixvoid.com/getfile --output unixvoid.sec
+  - make clean travisaci
+  - mv cryodns.aci cryodns-latest-linux-amd64.aci
+  - cp deps/sign.sh . && chmod +x sign.sh
+  - ./sign.sh $GPG_SEC
+  - curl -i --form sec=$BINDER_SEC --form file=@cryodns-latest-linux-amd64.aci --form path=rkt/cryodns/ https://cryo.unixvoid.com/upload
+  - curl -i --form sec=$BINDER_SEC --form file=@cryodns-latest-linux-amd64.aci.asc --form path=rkt/cryodns/ https://cryo.unixvoid.com/upload
