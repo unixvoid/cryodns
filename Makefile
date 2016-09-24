@@ -14,6 +14,7 @@ dependencies:
 	go get github.com/unixvoid/glogger
 	go get github.com/miekg/dns
 	go get gopkg.in/redis.v4
+	go get golang.org/x/crypto/sha3
 
 run:
 	go run \
