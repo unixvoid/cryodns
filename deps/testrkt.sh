@@ -8,7 +8,8 @@ sudo rkt run \
         ./cryodns.aci
 
 #CURRENT_DIR=$(pwd)
-#--port=dns:8053 \
+#--port=dns-tcp:8053 \
+#--port=dns-udp:8053 \
 #--port=api:8085 \
 #--volume redis,kind=host,source=$CURRENT_DIR \
 #--net=host \
