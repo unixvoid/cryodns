@@ -1,6 +1,6 @@
 [cryo]
 	loglevel	= "debug"
-	dnsport		= 9053
+	dnsport		= 53
 	apiport		= 9080
 	ttl		= 0
 	bootstrap	= true
