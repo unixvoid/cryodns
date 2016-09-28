@@ -56,7 +56,7 @@ aci:
 	chmod +x deps/run.sh
 	cp deps/run.sh stage.tmp/cryodns-layout/rootfs/
 	sed -i "s/\$$DIFF/$(GIT_HASH)/g" stage.tmp/cryodns-layout/rootfs/run.sh
-	cp config.gcfg stage.tmp/cryodns-layout/rootfs/
+	#cp config.gcfg stage.tmp/cryodns-layout/rootfs/
 	cp deps/manifest.json stage.tmp/cryodns-layout/manifest
 	cd stage.tmp/ && \
 		actool build cryodns-layout cryodns.aci && \
@@ -76,7 +76,7 @@ travisaci:
 	chmod +x deps/run.sh
 	cp deps/run.sh stage.tmp/cryodns-layout/rootfs/
 	sed -i "s/\$$DIFF/$(GIT_HASH)/g" stage.tmp/cryodns-layout/rootfs/run.sh
-	cp config.gcfg stage.tmp/cryodns-layout/rootfs/
+	#cp config.gcfg stage.tmp/cryodns-layout/rootfs/
 	cp deps/manifest.json stage.tmp/cryodns-layout/manifest
 	cd stage.tmp/ && \
 		../appc-v0.8.7/actool build cryodns-layout cryodns.aci && \
