@@ -30,7 +30,7 @@
         },
         {
             "name": "dns-udp",
-            "protocol": "tcp",
+            "protocol": "udp",
             "port": 53
         },
         {
