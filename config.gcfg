@@ -1,7 +1,7 @@
 [cryo]
 	loglevel	= "debug"
 	dnsport		= 53
-	apiport		= 9080
+	apiport		= 8080
 	ttl		= 0
 	bootstrap	= true
 	sectokensize	= 25
