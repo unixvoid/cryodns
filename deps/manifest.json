@@ -44,6 +44,11 @@
             "name": "redis",
             "path": "/redisbackup/",
             "readOnly": false
+        },
+        {
+            "name": "config",
+            "path": "/config.gcfg",
+            "readOnly": true
         }
         ]
     },

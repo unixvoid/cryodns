@@ -1,0 +1,16 @@
+[Unit]
+Description=cryodns
+
+[Service]
+ExecStart=/usr/bin/rkt run \
+	--insecure-options=all \
+        --volume redis,kind=host,source=/cryo/cryodns/redis/ \
+        --volume config,kind=host,source=/cryo/cryodns/config.gcfg \
+	--port=dns-tcp:53 \
+	--port=dns-udp:53 \
+	--port=api:8080 \
+	--debug \
+        unixvoid.com/cryodns
+
+[Install]
+WantedBy=multi-user.target
