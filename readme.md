@@ -18,10 +18,11 @@ There are 3 main ways to run cryodns:
 grab our handy [service file](https://github.com/unixvoid/cryodns/blob/master/deps/cryodns.service)
 
 **From Source**: Are we not compiled for your architecture? Wanna hack on the
-source?  Lets bulid and deploy:
+source?  Lets bulid and deploy:  
 `make dependencies`  
-`make run`
-If you want to build a docker use: `make docker`
+`make run`  
+  
+If you want to build a docker use: `make docker`  
 If you want to build an ACI use: `make aci`
 
 ## API guide
@@ -51,9 +52,11 @@ config file and break it down.
 To start off, every domain provider will probably be different.  If the fields
 are not identical with the listed ones this is fine, following this outline
 should make it pretty simple for any versed individual to setup.  
+  
 **Precursor**: it is recommended to set up cryodns on a server **before** making
 the following changes to your domains DNS settings, this will allow the server
 to start taking requests immediately.  
+  
 1. Find a suitable place to run your DNS nameserver.  A suitible server is one
    with a *static ip*.  I know that a large use of this project is to deal with
    non-static ip's, but every nameserver has to be static to work properly.
