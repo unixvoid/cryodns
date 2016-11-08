@@ -11,7 +11,7 @@ for easy consumption and updating.
 ## Running cryodns
 There are 3 main ways to run cryodns:  
 **Docker**: we have crydns pre-packaged over on the [dockerhub](https://hub.docker.com/r/unixvoid/cryodns/), go grab the latest and run: 
-`docker run -d -p 8080:8080 -p 53:53 unixvoid/cryodns.  
+`docker run -d -p 8080:8080 -p 53:53 unixvoid/cryodns`.
 
 **rkt**: we have public rkt images hosted on the site! check them out [here](https://cryo.unixvoid.com/bin/rkt/cryodns/) or go give us a fetch for 64bit machines!
 `rkt fetch unixvoid.com/cryodns`.  This image can be run with rkt or you can
