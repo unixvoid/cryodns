@@ -9,6 +9,21 @@ progress now) to update any amount of domains very fast.  The exposed API allows
 for easy consumption and updating.
 
 ## Running cryodns
+There are 3 main ways to run cryodns:  
+**Docker**: we have crydns pre-packaged over on the [dockerhub](https://hub.docker.com/r/unixvoid/cryodns/), go grab the latest and run: 
+`docker run -d -p 8080:8080 -p 53:53 unixvoid/cryodns.  
+
+**rkt**: we have public rkt images hosted on the site! check them out [here](https://cryo.unixvoid.com/bin/rkt/cryodns/) or go give us a fetch for 64bit machines!
+`rkt fetch unixvoid.com/cryodns`.  This image can be run with rkt or you can
+grab our handy [service file](https://github.com/unixvoid/cryodns/blob/master/deps/cryodns.service)
+
+**From Source**: Are we not compiled for your architecture? Wanna hack on the
+source?  Lets bulid and deploy:
+`make dependencies`  
+`make run`
+If you want to build a docker use: `make docker`
+If you want to build an ACI use: `make aci`
+
 ## API guide
 
 ## Configuration
