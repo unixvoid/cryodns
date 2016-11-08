@@ -38,23 +38,27 @@ are not identical with the listed ones this is fine, following this outline
 should make it pretty simple for any versed individual to setup.  
 **Precursor**: it is recommended to set up cryodns on a server **before** making
 the following changes to your domains DNS settings, this will allow the server
-to start taking requests immediately.
+to start taking requests immediately.  
 1. Find a suitable place to run your DNS nameserver.  A suitible server is one
    with a *static ip*.  I know that a large use of this project is to deal with
    non-static ip's, but every nameserver has to be static to work properly.
    There are many cloud infrastructure providers that allow free accounts as
    long as recource usage is low.  Luckily our server does not take much
    recources but bandwidth.  To get cryodns running, check out the `running
-   cryodns` section above.
+   cryodns` section above.  
 2. Add all entries that you will be authoritive for in your cryodns database.
-   For this, take a look at the API guide for **adding entries**.
-3. Collect the static-ip of the server running your version of cryodns
+   For this, take a look at the API guide for **adding entries**.  
+3. Collect the static-ip of the server running your version of cryodns  
 4. Visit your domain name providers website and find the `nameservers`/`advanced DNS` 
    section. You will need to add ANAME entries for your nameserver. One example
    of this is what I use for `unixvoid.com`.  I will add two ANAME entries
-   `ns1.unixvoid.com` and `ns2.unixvoid.com`.  I will set these to the static ip
-   that we collected from step 3.
-5. 
+   `ns1.unixvoid.com` and `ns2.unixvoid.com`.  I will set these to the static ip 
+   that we collected from step 3.  
+5. Once we have the settings set for our provider we will need the new ip's to
+   propagate, this can take some time, go get yourself a big ol cup of
+   **coffee**.  
+6. Tail those logs and make sure all requests are working correctly.  
+7. Profit.
 
 ## How I use cryodns
 I run a lot of *different* DNS services.  I prefer to save money and put many
