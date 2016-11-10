@@ -30,7 +30,7 @@ grab our handy [service file](https://github.com/unixvoid/cryodns/blob/master/de
 The configuration is very straightforward, we can take a look at the default
 config file and break it down.
 ```
-[cryo]							# this section is the start of the servers main config.
+[cryo]								# this section is the start of the servers main config.
 	loglevel		= "debug"		# loglevel, this can be [debug, cluster, info, error]
 	dnsport			= 53			# port for DNS to run on
 	apiport			= 8080			# port for API to run on
