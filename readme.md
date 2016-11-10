@@ -31,19 +31,19 @@ The configuration is very straightforward, we can take a look at the default
 config file and break it down.
 ```
 [cryo]	# this section is the start of the servers main config.
-	loglevel	= "debug"	# loglevel, this can be [debug, cluster, info, error]
-	dnsport		= 53		# port for DNS to run on
-	apiport		= 8080		# port for API to run on
-	ttl		= 0		# default TTL for every DNS record
-	bootstrap	= true		# bootstrap with a default security token or leave registration up to user. If selected, sec key will be generated on first boot, otherwise the /register api endpoint will be needed for initial registration
+	loglevel	= "debug"		# loglevel, this can be [debug, cluster, info, error]
+	dnsport		= 53			# port for DNS to run on
+	apiport		= 8080			# port for API to run on
+	ttl			= 0				# default TTL for every DNS record
+	bootstrap	= true			# bootstrap with a default security token or leave registration up to user. If selected, sec key will be generated on first boot, otherwise the /register api endpoint will be needed for initial registration
 	sectokensize	= 25		# length of security token in characters
 	secdictionary 	= "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"	# dictionary for security token
 
-[upstream]	# this section is the start of the upstream DNS config
+[upstream]						# this section is the start of the upstream DNS config
 	server		= "8.8.8.8:53"	# upstream dns address AND port.  This will be used if DNS record is not in the database.  No upstream requests are used if this is left blank
 
-[redis]		# this section is the start of redis configurations
-	host		= "localhost:6379"	# address and port of the redis server to be used
+[redis]							# this section is the start of redis configurations
+	host		= "localhost:6379"# address and port of the redis server to be used
 	password	= ""			# password for the redis server
 ```
 
