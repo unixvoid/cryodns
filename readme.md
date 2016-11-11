@@ -11,7 +11,7 @@ for easy consumption and updating.
 ## Running cryodns
 There are 3 main ways to run cryodns:  
 
-1. **Docker**: we have crydns pre-packaged over on the [dockerhub](https://hub.docker.com/r/unixvoid/cryodns/), go grab the latest and run: 
+1. **Docker**: we have cryodns pre-packaged over on the [dockerhub](https://hub.docker.com/r/unixvoid/cryodns/), go grab the latest and run: 
 `docker run -d -p 8080:8080 -p 53:53 unixvoid/cryodns`.
 
 2. **ACI/rkt**: we have public rkt images hosted on the site! check them out [here](https://cryo.unixvoid.com/bin/rkt/cryodns/) or go give us a fetch for 64bit machines!
@@ -32,8 +32,8 @@ config file and break it down.
 ```
 [cryo]								# this section is the start of the servers main config.
 	loglevel		= "debug"		# loglevel, this can be [debug, cluster, info, error]
-	dnsport			= 53			# port for DNS to run on
-	apiport			= 8080			# port for API to run on
+	dnsport			= 53			# port for DNS listener to bind to
+	apiport			= 8080			# port for API listener to bind to
 	ttl				= 0				# default TTL for every DNS record
 	bootstrap		= true			# bootstrap with a default security token or leave registration up to user. If selected, sec key will be generated on first boot, otherwise the /register api endpoint will be needed for initial registration
 	sectokensize	= 25			# length of security token in characters
@@ -60,8 +60,8 @@ to start taking requests immediately.
    with a *static ip*.  I know that a large use of this project is to deal with
    non-static ip's, but every nameserver has to be static to work properly.
    There are many cloud infrastructure providers that allow free accounts as
-   long as recource usage is low.  Luckily our server does not take much
-   recources but bandwidth.  To get cryodns running, check out the `running
+   long as recource usage is low.  Luckily our server does not take many
+   recources (maybe a little network bandwidth).  To get cryodns running, check out the `running
    cryodns` section above.  
 2. Add all entries that you will be authoritive for in your cryodns database.
    For this, take a look at the API guide for **adding entries**.  
