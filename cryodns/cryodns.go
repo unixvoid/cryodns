@@ -73,7 +73,7 @@ func main() {
 			break
 		case 28:
 			//glogger.Debug.Println("Routing 'AAAA' request")
-			//go aaaaresolve(w, req, redisClient)
+			go aaaaresolve(w, req, redisClient)
 			glogger.Debug.Println("Skipping 'AAAA' request")
 			break
 		default:
