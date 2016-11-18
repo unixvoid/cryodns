@@ -72,9 +72,9 @@ func main() {
 			go cnameresolve(w, req, redisClient)
 			break
 		case 28:
-			//glogger.Debug.Println("Routing 'AAAA' request")
+			glogger.Debug.Println("Routing 'AAAA' request")
 			go aaaaresolve(w, req, redisClient)
-			glogger.Debug.Println("Skipping 'AAAA' request")
+			//glogger.Debug.Println("Skipping 'AAAA' request")
 			break
 		default:
 			glogger.Debug.Println("Not 'A' request")
