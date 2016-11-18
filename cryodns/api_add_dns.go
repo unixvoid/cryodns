@@ -62,10 +62,13 @@ func addDNS(w http.ResponseWriter, r *http.Request, redisClient *redis.Client) {
 				domain = fmt.Sprintf("%s.", domain)
 			}
 
-			glogger.Debug.Printf("adding domain entry: dns:%s:%s :: %s", dnsType, domain, domainValue)
-
 			// add dns entry dns:<dns_type>:<domain> <domain_value>
+			glogger.Debug.Printf("adding domain entry: dns:%s:%s :: %s", dnsType, domain, domainValue)
 			redisClient.Set(fmt.Sprintf("dns:%s:%s", dnsType, domain), domainValue, 0).Err()
+
+			// add blank AAAA entry for rfc proper redirection
+			glogger.Debug.Printf("adding empty aaaa entry: dns:%s:%s", dnsType, domain)
+			redisClient.Set(fmt.Sprintf("dns:aaaa:%s", domain), "", 0).Err()
 
 			// add dns entry to the list of custom dns names
 			redisClient.SAdd("index:dns", fmt.Sprintf("%s:%s", dnsType, domain))
