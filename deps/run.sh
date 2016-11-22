@@ -1,5 +1,5 @@
 #!/bin/sh
-VER_NO="v0.0.1b PRE-RELEASE:$GIT_HASH"
+VER_NO="v0.0.1b PRE-RELEASE:<GIT_HASH>"
 
 echo "daemonize yes" > /redis.conf
 echo "dbfilename dump.rdb" >> /redis.conf

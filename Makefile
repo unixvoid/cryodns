@@ -35,7 +35,7 @@ docker:
 	cp deps/run.sh stage.tmp/
 	cp deps/rootfs.tar.gz stage.tmp/
 	cp config.gcfg stage.tmp/
-	sed -i "s/<GIT_HASH>/$(GIT_HASH)/g" stage.tmp/Dockerfile
+	sed -i "s/<GIT_HASH>/$(GIT_HASH)/g" stage.tmp/run.sh
 	cd stage.tmp/ && \
 		$(DOCKER_PREFIX) docker build -t $(IMAGE_NAME) .
 
@@ -55,7 +55,7 @@ aci:
 	cp bin/cryodns* stage.tmp/cryodns-layout/rootfs/cryodns
 	chmod +x deps/run.sh
 	cp deps/run.sh stage.tmp/cryodns-layout/rootfs/
-	sed -i "s/\$$DIFF/$(GIT_HASH)/g" stage.tmp/cryodns-layout/rootfs/run.sh
+	sed -i "s/<GIT_HASH>/$(GIT_HASH)/g" stage.tmp/cryodns-layout/rootfs/run.sh
 	cp config.gcfg stage.tmp/cryodns-layout/rootfs/
 	cp deps/manifest.json stage.tmp/cryodns-layout/manifest
 	cd stage.tmp/ && \
@@ -75,7 +75,7 @@ travisaci:
 	cp bin/cryodns* stage.tmp/cryodns-layout/rootfs/cryodns
 	chmod +x deps/run.sh
 	cp deps/run.sh stage.tmp/cryodns-layout/rootfs/
-	sed -i "s/\$$DIFF/$(GIT_HASH)/g" stage.tmp/cryodns-layout/rootfs/run.sh
+	sed -i "s/<GIT_HASH>/$(GIT_HASH)/g" stage.tmp/cryodns-layout/rootfs/run.sh
 	cp config.gcfg stage.tmp/cryodns-layout/rootfs/
 	cp deps/manifest.json stage.tmp/cryodns-layout/manifest
 	cd stage.tmp/ && \
