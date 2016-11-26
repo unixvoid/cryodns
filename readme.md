@@ -25,6 +25,26 @@ grab our handy [service file](https://github.com/unixvoid/cryodns/blob/master/de
   If you want to build an ACI use: `make aci`
 
 ## API guide
+cryodns exposes an api for adding, removing, and querying dns entries.  The
+following is the specification for endpoints and their protocols.
+- `/dns` : `GET` : endpoint for getting a list of registered dns entries.
+  - example: `curl localhost:8080/dns`
+- `/dns` : `POST` : endpoint for adding (or updating) dns entries. dnstype will default to 'A'
+  - parameters: `domain``sec``dnstype``value`
+  - example: `curl localhost:8080/dns`
+- `/register` : `GET` : endpoint for registering master admin (returns security
+  token). If the instance is not set to `bootstrap` in the config, this will
+  register the cryodns instance and return sec key to user.
+  - example: `curl localhost:8080/register`
+- `/remove` : `` : endpoint for removing dns entries. if `dnstype` is not set,
+  it will remove all entries
+  - parameters: `domain``sec``dnstype`
+  - example: `curl -d domain=unixvoid.com -d sec=<<SEC_TOKEN> localhost:8080/dns`
+- `rotate` : `POST` : endpoint to rotate security token. this takes the current
+  security token and will generate a new one.
+  - parameters: `sec`
+  - example: `curl -d sec=<SEC_TOKEN> localhost:8080/rotate`
+
 
 ## Configuration
 The configuration is very straightforward, we can take a look at the default
