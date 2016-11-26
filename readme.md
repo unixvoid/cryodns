@@ -1,5 +1,5 @@
 # Cryodns
-[![Build Status (Travis)][![Build Status (Travis)](https://travis-ci.org/unixvoid/cryodns.svg?branch=master)](https://travis-ci.org/unixvoid/cryodns)]
+[![Build Status (Travis)](https://travis-ci.org/unixvoid/cryodns.svg?branch=master)](https://travis-ci.org/unixvoid/cryodns)]
 This is the DNS service running my personal site [unixvoid](https://unixvoid.com).  
 It was built as a drop-in replacement for a popular dynamic DNS updater
 [DYN](https://dyn.com).  The motivation for this project was not monitary, I
