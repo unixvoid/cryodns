@@ -86,6 +86,7 @@ travisaci:
 clean:
 	rm -rf bin/
 	rm -rf stage.tmp/
+	rm -f cryodns.aci
 
 stat:
 	mkdir -p bin/
