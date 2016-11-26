@@ -25,7 +25,7 @@ func apiListener() {
 	}).Methods("POST")
 	router.HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {
 		rotate(w, r, redisClient)
-	}).Methods("POST")
+	}).Methods("GET")
 	router.HandleFunc("/remove", func(w http.ResponseWriter, r *http.Request) {
 		removeDNS(w, r, redisClient)
 	}).Methods("POST")
