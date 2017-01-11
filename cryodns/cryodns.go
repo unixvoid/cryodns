@@ -148,9 +148,20 @@ func anameresolve(w dns.ResponseWriter, req *dns.Msg, redisClient *redis.Client)
 	res, err := checkRecord(hostname, "a", redisClient)
 	if err != nil {
 		// we dont have it in local records, send upstream
-		glogger.Debug.Println("entry not found in records, sending upstream")
-		req = upstreamQuery(w, req)
-		w.WriteMsg(req)
+		glogger.Debug.Println("ipv4 entry not found in records, sending rcode3")
+
+		rr := new(dns.A)
+		rr.Hdr = dns.RR_Header{Name: hostname, Rrtype: dns.TypeA, Class: dns.ClassINET, Ttl: config.Cryo.Ttl}
+		rr.A = net.ParseIP("")
+
+		// craft reply
+		rep := new(dns.Msg)
+		rep.SetReply(req)
+		rep.SetRcode(req, dns.RcodeNameError)
+		rep.Answer = append(rep.Answer, rr)
+
+		// send it
+		w.WriteMsg(rep)
 		return
 	}
 
@@ -204,24 +215,37 @@ func aaaaresolve(w dns.ResponseWriter, req *dns.Msg, redisClient *redis.Client) 
 	hostname := req.Question[0].Name
 	glogger.Cluster.Println(hostname)
 
-	// check redis for entry
-	res, err := checkRecord(hostname, "aaaa", redisClient)
+	//check redis for entry
+	_, err := checkRecord(hostname, "a", redisClient)
 	if err != nil {
 		// we dont have it in local records, send upstream
-		glogger.Debug.Println("entry not found in records, sending upstream")
-		req = upstreamQuery(w, req)
-		w.WriteMsg(req)
+		glogger.Debug.Println("ipv6 entry not found in records, sending rcode3")
+
+		rr := new(dns.AAAA)
+		rr.Hdr = dns.RR_Header{Name: hostname, Rrtype: dns.TypeAAAA, Class: dns.ClassINET, Ttl: config.Cryo.Ttl}
+		rr.AAAA = net.ParseIP("")
+
+		// craft reply
+		rep := new(dns.Msg)
+		rep.SetReply(req)
+		rep.SetRcode(req, dns.RcodeNameError)
+		rep.Answer = append(rep.Answer, rr)
+
+		// send it
+		w.WriteMsg(rep)
 		return
 	}
 
 	// craft response
+	glogger.Debug.Println("bypassing ipv6 request")
 	rr := new(dns.AAAA)
 	rr.Hdr = dns.RR_Header{Name: hostname, Rrtype: dns.TypeAAAA, Class: dns.ClassINET, Ttl: config.Cryo.Ttl}
-	rr.AAAA = net.ParseIP(res)
+	rr.AAAA = net.ParseIP("")
 
 	// craft reply
 	rep := new(dns.Msg)
 	rep.SetReply(req)
+	rep.SetRcode(req, dns.RcodeSuccess)
 	rep.Answer = append(rep.Answer, rr)
 
 	// send it
