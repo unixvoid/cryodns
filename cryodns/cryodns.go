@@ -149,7 +149,7 @@ func anameresolve(w dns.ResponseWriter, req *dns.Msg, redisClient *redis.Client)
 	res, err := checkRecord(hostname, "a", redisClient)
 	if err != nil {
 		// if auth set, return rcode3, or else send it upstream (reflective)
-		if config.Cryo.authoritive {
+		if config.Cryo.Authoritive {
 			// we dont have it in local records, send upstream
 			glogger.Debug.Println("ipv4 entry not found in records, sending rcode3")
 
@@ -228,7 +228,7 @@ func aaaaresolve(w dns.ResponseWriter, req *dns.Msg, redisClient *redis.Client) 
 	_, err := checkRecord(hostname, "a", redisClient)
 	if err != nil {
 		// only proxy upstream if non-authoritive
-		if config.Cryo.authoritive {
+		if config.Cryo.Authoritive {
 			glogger.Debug.Println("ipv6 entry not found in records, sending rcode3")
 
 			rr := new(dns.AAAA)
