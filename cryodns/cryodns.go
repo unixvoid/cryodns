@@ -149,7 +149,7 @@ func anameresolve(w dns.ResponseWriter, req *dns.Msg, redisClient *redis.Client)
 	res, err := checkRecord(hostname, "a", redisClient)
 	if err != nil {
 		// if auth set, return rcode3, or else send it upstream (reflective)
-		if authoritive {
+		if config.Cryo.authoritive {
 			// we dont have it in local records, send upstream
 			glogger.Debug.Println("ipv4 entry not found in records, sending rcode3")
 
@@ -227,22 +227,30 @@ func aaaaresolve(w dns.ResponseWriter, req *dns.Msg, redisClient *redis.Client) 
 	//check redis for entry
 	_, err := checkRecord(hostname, "a", redisClient)
 	if err != nil {
-		// we dont have it in local records, send upstream
-		glogger.Debug.Println("ipv6 entry not found in records, sending rcode3")
+		// only proxy upstream if non-authoritive
+		if config.Cryo.authoritive {
+			glogger.Debug.Println("ipv6 entry not found in records, sending rcode3")
 
-		rr := new(dns.AAAA)
-		rr.Hdr = dns.RR_Header{Name: hostname, Rrtype: dns.TypeAAAA, Class: dns.ClassINET, Ttl: config.Cryo.Ttl}
-		rr.AAAA = net.ParseIP("")
+			rr := new(dns.AAAA)
+			rr.Hdr = dns.RR_Header{Name: hostname, Rrtype: dns.TypeAAAA, Class: dns.ClassINET, Ttl: config.Cryo.Ttl}
+			rr.AAAA = net.ParseIP("")
 
-		// craft reply
-		rep := new(dns.Msg)
-		rep.SetReply(req)
-		rep.SetRcode(req, dns.RcodeNameError)
-		rep.Answer = append(rep.Answer, rr)
+			// craft reply
+			rep := new(dns.Msg)
+			rep.SetReply(req)
+			rep.SetRcode(req, dns.RcodeNameError)
+			rep.Answer = append(rep.Answer, rr)
 
-		// send it
-		w.WriteMsg(rep)
-		return
+			// send it
+			w.WriteMsg(rep)
+			return
+		} else {
+			// we dont have it in local records, send upstream
+			glogger.Debug.Println("entry not found in records, sending upstream")
+			req = upstreamQuery(w, req)
+			w.WriteMsg(req)
+
+		}
 	}
 
 	// craft response
