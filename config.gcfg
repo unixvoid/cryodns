@@ -6,6 +6,7 @@
 	bootstrap	= true
 	sectokensize	= 25
 	secdictionary 	= "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+	authoritive	= true
 
 [upstream]
 	server		= "8.8.8.8:53"
