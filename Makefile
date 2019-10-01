@@ -42,8 +42,8 @@ docker:
 dockerrun:
 	$(DOCKER_PREFIX) docker run \
 		-d \
-		-p 9053:9053 \
-		-p 9080:9080 \
+		-p 9053:53 \
+		-p 9080:8080 \
 		-v /tmp/:/redisbackup:rw \
 		--name cryodns \
 		$(IMAGE_NAME)
