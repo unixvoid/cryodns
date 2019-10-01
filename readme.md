@@ -35,7 +35,7 @@ following is the specification for endpoints and their protocols.
     `domain`: the domain being updated  
     `value`: domain value (aka IP or CNAME)  
     `sec`: security key associated with registered instance  
-    `dnstype`: type of request {A, AAAA}  
+    `dnstype`: type of request {A, AAAA, CNAME}  
   - example: `curl -d domain=unxivoid.com -d value=127.0.0.1 -d sec=topsecretkey -d dnstype=A localhost:8080/dns`
 - `/register` : `GET` : endpoint for registering master admin (returns security
   token). If the instance is not set to `bootstrap` in the config, this will
@@ -46,7 +46,7 @@ following is the specification for endpoints and their protocols.
   - parameters:  
     `domain`: the domain being updated  
     `sec`: security key associated with the registered instance  
-    `dnstype`: type of request to remove {A, AAAA} (blank will remove all)  
+    `dnstype`: type of request to remove {A, AAAA, CNAME} (blank will remove all)  
   - example: `curl -d domain=unixvoid.com -d sec=topsecretkey localhost:8080/dns`
 - `rotate` : `POST` : endpoint to rotate security token. this takes the current
   security token and will generate a new one.
