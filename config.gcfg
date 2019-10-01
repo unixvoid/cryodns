@@ -1,16 +1,16 @@
 [cryo]
-	loglevel	= "debug"
-	dnsport		= 53
-	apiport		= 8080
-	ttl		= 0
-	bootstrap	= true
-	sectokensize	= 25
-	secdictionary 	= "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-	authoritive	= true
+  loglevel      = "debug"
+  dnsport       = 53
+  apiport       = 8080
+  ttl           = 0
+  bootstrap     = true
+  sectokensize  = 25
+  secdictionary = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+  authoritive   = true
 
 [upstream]
-	server		= "8.8.8.8:53"
+  server        = "8.8.8.8:53"
 
 [redis]
-	host		= "localhost:6379"
-	password	= ""
+  host          = "localhost:6379"
+  password      = ""
