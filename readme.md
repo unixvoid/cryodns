@@ -31,41 +31,50 @@ following is the specification for endpoints and their protocols.
 - `/dns` : `GET` : endpoint for getting a list of registered dns entries.
   - example: `curl localhost:8080/dns`
 - `/dns` : `POST` : endpoint for adding (or updating) dns entries. dnstype will default to 'A'
-  - parameters: `domain`,`sec`,`dnstype`,`value`
-  - example: `curl localhost:8080/dns`
+  - parameters:  
+    `domain`: the domain being updated  
+    `value`: domain value (aka IP or CNAME)  
+    `sec`: security key associated with registered instance  
+    `dnstype`: type of request {A, AAAA, CNAME}  
+  - example: `curl -d domain=unxivoid.com -d value=127.0.0.1 -d sec=topsecretkey -d dnstype=A localhost:8080/dns`
 - `/register` : `GET` : endpoint for registering master admin (returns security
   token). If the instance is not set to `bootstrap` in the config, this will
   register the cryodns instance and return sec key to user.
   - example: `curl localhost:8080/register`
 - `/remove` : `POST` : endpoint for removing dns entries. if `dnstype` is not set,
   it will remove all entries
-  - parameters: `domain`,`sec`,`dnstype`
-  - example: `curl -d domain=unixvoid.com -d sec=<<SEC_TOKEN> localhost:8080/dns`
+  - parameters:  
+    `domain`: the domain being updated  
+    `sec`: security key associated with the registered instance  
+    `dnstype`: type of request to remove {A, AAAA, CNAME} (blank will remove all)  
+  - example: `curl -d domain=unixvoid.com -d sec=topsecretkey localhost:8080/dns`
 - `rotate` : `POST` : endpoint to rotate security token. this takes the current
   security token and will generate a new one.
-  - parameters: `sec`
-  - example: `curl -d sec=<SEC_TOKEN> localhost:8080/rotate`
+  - parameters:  
+    `sec`: existing security token  
+  - example: `curl -d sec=topsecretkey localhost:8080/rotate`
 
 
 ## Configuration
 The configuration is very straightforward, we can take a look at the default
 config file and break it down.
 ```
-[cryo]							# this section is the start of the servers main config.
-	loglevel		= "debug"		# loglevel, this can be [debug, cluster, info, error]
-	dnsport			= 53			# port for DNS listener to bind to
-	apiport			= 8080			# port for API listener to bind to
-	ttl			= 0			# default TTL for every DNS record
-	bootstrap		= true			# bootstrap with a default security token or leave registration up to user. If selected, sec key will be generated on first boot, otherwise the /register api endpoint will be needed for initial registration
-	sectokensize		= 25			# length of security token in characters
-	secdictionary 		= "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"	# dictionary for security token
+[cryo]                             # this section is the start of the servers main config.
+  loglevel      = "debug"          # loglevel, this can be [debug, cluster, info, error]
+  dnsport       = 53               # port for DNS listener to bind to
+  apiport       = 8080             # port for API listener to bind to
+  ttl           = 0                # default TTL for every DNS record
+  bootstrap     = true             # bootstrap with a default security token or leave registration up to user. If selected, sec key will be generated on first boot, otherwise the /register api endpoint will be needed for initial registration
+  sectokensize  = 25               # length of security token in characters
+  secdictionary = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" # dictionary for security token
+  authoritive   = true             # set the server to be authoritive of its entries or not
 
-[upstream]						# this section is the start of the upstream DNS config
-	server			= "8.8.8.8:53"		# upstream dns address AND port.  This will be used if DNS record is not in the database.  No upstream requests are used if this is left blank
+[upstream]                         # this section is the start of the upstream DNS config
+  server        = "8.8.8.8:53"     # upstream dns address AND port.  This will be used if DNS record is not in the database.  No upstream requests are used if this is left blank
 
-[redis]							# this section is the start of redis configurations
-	host			= "localhost:6379"	# address and port of the redis server to be used
-	password		= ""			# password for the redis server
+[redis]                            # this section is the start of redis configurations
+  host          = "localhost:6379" # address and port of the redis server to be used
+  password      = ""               # password for the redis server
 ```
 
 ## Setting up with your domain name provider
